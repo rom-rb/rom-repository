@@ -23,12 +23,13 @@ group :test do
   gem 'rspec'
   gem 'byebug', platforms: :mri
   gem 'pg', platforms: [:mri, :rbx]
-  gem 'pg_jruby', platforms: :jruby
   gem 'codeclimate-test-reporter', require: nil
 end
 
 group :benchmarks do
+  gem 'hotch', platforms: :mri
   gem 'benchmark-ips'
+  gem 'activerecord', '~> 5.0.0.rc'
 end
 
 group :tools do
