@@ -89,7 +89,7 @@ module ROM
             }
           end
 
-          __new__(relation.combine(*nodes))
+          __new__(relation.graph(*nodes))
         end
 
         # Shortcut for combining with parents which infers the join keys
