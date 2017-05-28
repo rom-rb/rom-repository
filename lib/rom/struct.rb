@@ -92,9 +92,10 @@ module ROM
 
     private
 
-    def method_missing(*)
+    def method_missing(method, *)
       super
     rescue NameError => error
+      raise if method == :to_ary
       raise MissingAttribute.new("#{ error.message } (not loaded attribute?)")
     end
   end
