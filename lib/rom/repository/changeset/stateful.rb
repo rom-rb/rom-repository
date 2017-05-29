@@ -128,7 +128,7 @@ module ROM
       #
       # @api public
       def map(*steps, &block)
-        extend(*steps, for_diff: true, &block)
+        extend(*steps, use_for_diff: true, &block)
       end
 
       # Pipe changeset's data using custom steps define on the pipe.
@@ -144,7 +144,9 @@ module ROM
       # @return [Changeset]
       #
       # @api public
-      def extend(*steps, **options, &block)
+      def extend(*steps, use_for_diff: false, **opts, &block)
+        options = { use_for_diff: use_for_diff, **opts }
+
         if block
           if steps.size > 0
             extend(*steps, options).extend(options, &block)

@@ -28,8 +28,8 @@ module ROM
       extend Initializer
 
       param :processor, default: -> { self.class.transproc }
-      option :diff_processor, optional: true
       option :use_for_diff, optional: true, default: -> { true }
+      option :diff_processor, optional: true, default: -> { use_for_diff ? processor : nil }
 
       def self.[](name)
         container[name]
@@ -40,17 +40,15 @@ module ROM
       end
 
       def bind(context)
-        if processor.is_a?(Proc)
-          self.class.new(Pipe[-> *args { context.instance_exec(*args, &processor) }])
-        else
-          self
-        end
+        return self unless processor.is_a?(Proc) || diff_processor.is_a?(Proc)
+
+        new(bind_processor(processor, context), diff_processor: bind_processor(diff_processor, context))
       end
 
-      def compose(other, for_diff: other.is_a?(Pipe) ? other.use_for_diff : false)
+      def compose(other, use_for_diff: other.is_a?(Pipe) ? other.use_for_diff : false)
         new_proc = processor ? processor >> other : other
 
-        if for_diff
+        if use_for_diff
           diff_proc = diff_processor ? diff_processor >> other : other
           new(new_proc, diff_processor: diff_proc)
         else
@@ -85,6 +83,14 @@ module ROM
 
       def new(processor, opts = EMPTY_HASH)
         Pipe.new(processor, options.merge(opts))
+      end
+
+      def bind_processor(processor, context)
+        if processor.is_a?(Proc)
+          self[-> *args { context.instance_exec(*args, &processor) }]
+        else
+          processor
+        end
       end
     end
   end

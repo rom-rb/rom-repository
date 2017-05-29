@@ -160,5 +160,34 @@ RSpec.describe 'Using changesets' do
       expect(result.title).to eql('rom-rb is awesome')
       expect(result.updated_at).to be(nil)
     end
+
+    it 'works with mixed several class-level pipes' do
+      book = repo.create(title: 'rom-rb is awesome')
+
+      changeset_class = Class.new(ROM::Changeset::Update[:books]) do
+        map { |title: | { title: title.upcase } }
+        extend { |title: | { title: title.reverse } }
+      end
+
+      changeset = repo
+                    .changeset(changeset_class)
+                    .by_pk(book.id)
+                    .data(title: 'rom-rb is really awesome')
+
+      expect(changeset.diff).to eql(title: 'ROM-RB IS REALLY AWESOME')
+      expect(changeset.to_h).to eql(title: 'EMOSEWA YLLAER SI BR-MOR')
+    end
+
+    it 'works with mixed several instance-level pipes' do
+      book = repo.create(title: 'rom-rb is awesome')
+
+      changeset = repo.
+                    changeset(book.id, title: 'rom-rb is really awesome').
+                    map { |title: | { title: title.upcase } }.
+                    extend { |title: | { title: title.reverse } }
+
+      expect(changeset.diff).to eql(title: 'ROM-RB IS REALLY AWESOME')
+      expect(changeset.to_h).to eql(title: 'EMOSEWA YLLAER SI BR-MOR')
+    end
   end
 end
