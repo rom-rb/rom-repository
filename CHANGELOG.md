@@ -2,10 +2,7 @@
 
 ### Added
 
-* `Changeset#extend` to exclude steps from the `#diff` output, this allows
-  to filter out timestamp changes prior to updates so that we can avoid
-  hitting the database in case of timestamp-only changes. You still can call `.map(:touch)`
-  if you want to have `updated_at` refreshed unconditionally (flash-gordon)
+* `Changeset#extend` to exclude steps from the `#diff` output, this allows to filter out timestamp changes prior to updates so that we can avoid hitting the database in case of timestamp-only changes. You still can call `.map(:touch)` if you want to have `updated_at` refreshed unconditionally (flash-gordon)
   
 ## Fixed
 
