@@ -90,12 +90,16 @@ module ROM
       __send__(name)
     end
 
+    # @api private
+    def respond_to_missing?(*)
+      super
+    end
+
     private
 
     def method_missing(method, *)
       super
     rescue NameError => error
-      raise if method == :to_ary
       raise MissingAttribute.new("#{ error.message } (not loaded attribute?)")
     end
   end
