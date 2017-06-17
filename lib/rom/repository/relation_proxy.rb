@@ -1,3 +1,5 @@
+require 'dry/core/deprecations'
+
 require 'rom/initializer'
 require 'rom/relation/materializable'
 
@@ -15,12 +17,18 @@ module ROM
     # @api public
     class RelationProxy
       extend Initializer
+      extend Dry::Core::Deprecations[:rom]
+
       include Relation::Materializable
 
       (Kernel.private_instance_methods - %i(raise)).each(&method(:undef_method))
 
       include RelationProxy::Combine
       include RelationProxy::Wrap
+
+      deprecate :combine_parents
+      deprecate :combine_children
+      deprecate :wrap_parent
 
       RelationRegistryType = Types.Definition(RelationRegistry).constrained(type: RelationRegistry)
 
