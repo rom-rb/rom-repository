@@ -116,7 +116,7 @@ module ROM
           msg = <<-STR
             Relation#as will change behavior in 4.0. Use `map_to` instead
               => Called at:
-                #{Kernel.caller.join("\n")}
+                #{Kernel.caller[0..5].join("\n")}
             STR
 
           Dry::Core::Deprecations.warn(msg)
