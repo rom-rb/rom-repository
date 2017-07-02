@@ -65,7 +65,6 @@ module ROM
     extend ClassInterface
     extend Initializer
     extend Dry::Core::ClassAttributes
-    extend Dry::Core::Deprecations[:rom]
 
     # @!method self.auto_struct
     #   Get or set auto_struct setting
@@ -189,7 +188,6 @@ module ROM
         container.command(*args, &block)
       end
     end
-    deprecate :command
 
     # Return a changeset for a relation
     #
@@ -275,7 +273,6 @@ module ROM
         end
       end
     end
-    deprecate :changeset
 
     # Open a database transaction
     #
