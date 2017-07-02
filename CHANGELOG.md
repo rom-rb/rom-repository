@@ -1,3 +1,12 @@
+# v1.3.4 2017-07-02
+
+### Added
+
+* `Relation#map_to` available in repository relations to ease upgrade to rom 4.0 (solnic)
+* Deprecation warnings in preparation for rom 4.0 release (solnic)
+
+[Compare v1.3.3...v1.3.4](https://github.com/rom-rb/rom-repository/compare/v1.3.3...v1.3.4)
+
 # v1.3.3 2017-05-31
 
 ### Added
