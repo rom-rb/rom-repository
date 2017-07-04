@@ -24,18 +24,15 @@ RSpec.describe 'Repository with multi-adapters configuration' do
 
     module Test
       class Users < ROM::Relation[:sql]
-        gateway :default
-        schema(:users, infer: true)
-        register_as :sql_users
+        schema(:users, as: :sql_users, infer: true)
       end
 
       class Tasks < ROM::Relation[:memory]
-        schema(:tasks) do
+        schema(:tasks, as: :memory_tasks) do
           attribute :user_id, ROM::Types::Int
           attribute :title, ROM::Types::String
         end
 
-        register_as :memory_tasks
         gateway :memory
 
         use :key_inference

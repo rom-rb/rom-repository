@@ -1,9 +1,9 @@
 RSpec.shared_context 'relations' do
-  let(:users) { rom.relation(:users) }
-  let(:tasks) { rom.relation(:tasks) }
-  let(:tags) { rom.relation(:tags) }
-  let(:posts) { rom.relation(:posts) }
-  let(:books) { rom.relation(:books) }
+  let(:users) { rom.relations[:users] }
+  let(:tasks) { rom.relations[:tasks] }
+  let(:tags) { rom.relations[:tags] }
+  let(:posts) { rom.relations[:posts] }
+  let(:books) { rom.relations[:books] }
 
   before do
     configuration.relation(:books) do
@@ -96,9 +96,7 @@ RSpec.shared_context 'relations' do
     end
 
     configuration.relation(:comments) do
-      register_as :comments
-
-      schema(:messages, infer: true) do
+      schema(:messages, as: :comments, infer: true) do
         associations do
           has_many :reactions, relation: :likes
           has_many :reactions, relation: :likes, as: :emotions
@@ -107,9 +105,7 @@ RSpec.shared_context 'relations' do
     end
 
     configuration.relation(:likes) do
-      register_as :likes
-
-      schema(:reactions, infer: true) do
+      schema(:reactions, as: :likes, infer: true) do
         associations do
           belongs_to :message, relation: :comments
         end

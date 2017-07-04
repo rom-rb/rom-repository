@@ -8,15 +8,15 @@ RSpec.describe 'loading proxy' do
   include_context 'seeds'
 
   let(:users_proxy) do
-    ROM::Repository::RelationProxy.new(users, name: :users)
+    repo.users
   end
 
   let(:tasks_proxy) do
-    ROM::Repository::RelationProxy.new(tasks, name: :tasks)
+    repo.tasks
   end
 
   let(:tags_proxy) do
-    ROM::Repository::RelationProxy.new(tags, name: :tags)
+    repo.tags
   end
 
   describe '#inspect' do

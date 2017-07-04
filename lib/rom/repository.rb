@@ -125,7 +125,8 @@ module ROM
 
       @relations = RelationRegistry.new do |registry, relations|
         self.class.relations.each do |name|
-          relation = container.relation(name)
+          relation = container.relations[name]
+          relation = relation.with(mappers: container.mappers[name]) if container.mappers.key?(name)
 
           proxy = RelationProxy.new(
             relation, name: name, mappers: mappers, registry: registry, auto_struct: auto_struct
