@@ -1,4 +1,4 @@
-# v1.3.4 2017-07-02
+# v1.4.0 2017-07-04
 
 ### Added
 
@@ -12,7 +12,7 @@
 ### Added
 
 * `Changeset#extend` to exclude steps from the `#diff` output, this allows to filter out timestamp changes prior to updates so that we can avoid hitting the database in case of timestamp-only changes. You still can call `.map(:touch)` if you want to have `updated_at` refreshed unconditionally (flash-gordon)
-  
+
 ## Fixed
 
 * `aggregate` and `combine` works correctly with nested graph options where associations are aliased (solnic)
